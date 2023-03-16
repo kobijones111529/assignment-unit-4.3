@@ -20,6 +20,11 @@ function equal(a, b) {
   return true;
 }
 
+console.assert(equal([], []), '%o should equal %o', [], []);
+console.assert(!equal([], [1, 2]), '%o should not equal %o', [], [1, 2]);
+console.assert(equal(['hello', 'there'], ['hello', 'there']), '%o should equal %o', ['hello', 'there'], ['hello', 'there'])
+console.assert(!equal([1, 2, 3], [1, 3, 2]), '%o should not equal %o', [1, 2, 3], [1, 3, 2]);
+
 const maxItems = 5;
 let basket = [];
 
@@ -57,6 +62,9 @@ function removeItem(item) {
   
   return basket.splice(index, 1)[0];
 }
+
+
+/// Tests ///
 
 {
   console.log('-- Testing addItem --');
