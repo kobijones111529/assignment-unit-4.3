@@ -45,9 +45,11 @@ function addItems(...items) {
 }
 
 function listItems() {
+  console.group('Items in basket');
   for (const item of basket) {
     console.log(item);
   }
+  console.groupEnd();
 }
 
 function empty() {
@@ -74,7 +76,6 @@ function removeItem(item) {
   console.log(`Adding ${newItem} to basket`)
   addItem(newItem);
   console.assert(equal(basket, [newItem]), `Basket should be`, [newItem]);
-  console.log('Listing items in basket...');
   listItems();
 }
 
@@ -84,13 +85,13 @@ function removeItem(item) {
   const testItems = ['tungsten cube', 'jellyfish', 'water', 'iPhone'];
   addItems(...testItems);
   console.assert(equal(basket, testItems), 'Basket should be', testItems);
-  const newItem1 = 'pear';
-  const newItem2 = 'bread';
-  console.log(`Adding ${newItem1} and ${newItem2} to basket`);
-  console.log(`addItem (should be true):`, addItem(newItem1));
-  console.log(`addItem (should be false):`, addItem(newItem2));
-  console.assert(equal(basket, [...testItems, newItem1]), 'Basket should be ', [...testItems, newItem1]);
-  console.log('Listing items in basket...');
+  const newItems = ['pear', 'bread'];
+  console.log(`Adding %o to basket`, newItems);
+  for (const newItem of newItems) {
+    console.log(`addItem (should be %o):`, !isFull(), addItem(newItem));
+  }
+  const expected = [...testItems, ...newItems].slice(0, maxItems);
+  console.assert(equal(basket, expected), 'Basket should be ', expected);
   listItems();
 }
 
@@ -112,10 +113,13 @@ function removeItem(item) {
 
 {
   console.log('-- Testing empty --');
-  console.log('Emptying array');
   empty();
-  console.log('Basket should be', []);
-  console.log('Listing items in basket...');
+  console.assert(equal(basket, []), 'Basket should be', []);
+  const newItems = ['green onion', 'green apple', 'green carrots'];
+  addItems(...newItems);
+  console.assert(equal(basket, newItems), 'Basket should be', newItems);
+  console.log('Emptying basket');
+  empty();
   listItems();
 }
 
@@ -125,7 +129,6 @@ function removeItem(item) {
   console.log(`Removing ${remove} from basket`);
   const removed = removeItem(remove);
   console.log(`Removed ${removed === null ? 'nothing' : removed} from basket`);
-  console.log('Listing items in basket...');
   listItems();
 }
 
@@ -135,6 +138,5 @@ function removeItem(item) {
   console.log(`Removing ${remove} from basket`);
   const removed = removeItem(remove);
   console.log(`Removed ${removed === null ? 'nothing' : removed} from basket`);
-  console.log('Listing items in basket...');
   listItems();
 }
