@@ -28,7 +28,7 @@ function listItems() {
 }
 
 function empty() {
-  basket = [];
+  basket.splice(0);
 }
 
 function removeItem(item) {
