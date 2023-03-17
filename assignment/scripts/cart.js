@@ -70,73 +70,86 @@ function removeItem(item) {
 
 {
   console.log('-- Testing addItem --');
-  empty();
-  console.assert(equal(basket, []), 'Basket should be empty');
+  basket = [];
+  console.log('Basket is', basket);
   const newItem = 'apple';
-  console.log(`Adding ${newItem} to basket`)
-  addItem(newItem);
-  console.assert(equal(basket, [newItem]), `Basket should be`, [newItem]);
-  listItems();
+  console.log('Adding %o to basket', newItem)
+  console.log('addItem (should be %o):', !isFull(), addItem(newItem));
+  console.assert(equal(basket, [newItem]), 'Basket should be', [newItem]);
+  console.log('Basket is', basket);
 }
 
 {
   console.log('-- Testing addItem --');
-  empty();
-  const testItems = ['tungsten cube', 'jellyfish', 'water', 'iPhone'];
-  addItems(...testItems);
-  console.assert(equal(basket, testItems), 'Basket should be', testItems);
-  const newItems = ['pear', 'bread'];
-  console.log(`Adding %o to basket`, newItems);
-  for (const newItem of newItems) {
-    console.log(`addItem (should be %o):`, !isFull(), addItem(newItem));
-  }
-  const expected = [...testItems, ...newItems].slice(0, maxItems);
+  basket = ['tungsten cube', 'jellyfish', 'water', 'iPhone', 'spaghetti noodle'];
+  console.log('Basket is', basket);
+  const newItem = 'bread';
+  console.log('Adding %o to basket', newItem);
+  console.log(`addItem (should be %o):`, false, addItem(newItem));
+  const expected = ['tungsten cube', 'jellyfish', 'water', 'iPhone', 'spaghetti noodle'];
   console.assert(equal(basket, expected), 'Basket should be ', expected);
-  listItems();
+  console.log('Basket is', basket);
 }
 
 {
   console.log('-- Testing removeItem --');
+  basket = ['Apple M1 Pro laptop', 'pear', 'child'];
+  console.log('Basket is', basket);
   const remove = 'pear';
   console.log(`Removing ${remove} from basket`);
   console.log(`Removed ${removeItem(remove)} from basket`);
-  listItems();
+  const expected = ['Apple M1 Pro laptop', 'child'];
+  console.assert(equal(basket, expected), 'Basket should be', expected);
+  console.log('Basket is', basket);
 }
 
 {
   console.log('-- Testing addItems --');
-  const newItmes = ['rice', 'lettuce', 'basil'];
-  console.log(`Adding ${newItmes} to basket`);
-  addItems(...newItmes);
-  listItems();
+  basket = ['rice', 'lettuce'];
+  console.log('Basket is', basket);
+  const newItems = ['worse lettuce', 'purple'];
+  console.log('Adding %o to basket', newItems);
+  addItems(...newItems);
+  console.assert(equal(basket, ['rice', 'lettuce', 'worse lettuce', 'purple']));
+  console.log('Basket is', basket);
 }
 
 {
   console.log('-- Testing empty --');
-  empty();
-  console.assert(equal(basket, []), 'Basket should be', []);
-  const newItems = ['green onion', 'green apple', 'green carrots'];
-  addItems(...newItems);
-  console.assert(equal(basket, newItems), 'Basket should be', newItems);
+  basket = ['modestly sized townhouse', 'granola'];
+  console.log('Basket is', basket);
   console.log('Emptying basket');
   empty();
-  listItems();
+  console.assert(equal(basket, []), 'Basket should be', []);
+  console.log('Basket is', basket);
 }
 
 {
   console.log('-- Testing removeItem --');
-  const remove = 'rice';
-  console.log(`Removing ${remove} from basket`);
+  basket = ['green eggs', 'ham', 'Sam I am'];
+  console.log('Basket is', basket);
+  const remove = 'ham';
+  console.log('Removing %o from basket', remove);
   const removed = removeItem(remove);
-  console.log(`Removed ${removed === null ? 'nothing' : removed} from basket`);
-  listItems();
+  console.log(
+    `Removed ${removed === null ? '%s' : '%o'} from basket`,
+    removed === null ? 'nothing' : removed
+  );
+  console.assert(equal(basket, ['green eggs', 'Sam I am']));
+  console.log('Basket is', basket);
 }
 
 {
   console.log('-- Testing removeItem --');
+  basket = ['nacho'];
+  console.log('Basket is', basket);
   const remove = 'cheese';
-  console.log(`Removing ${remove} from basket`);
+  console.log('Removing %o from basket', remove);
   const removed = removeItem(remove);
-  console.log(`Removed ${removed === null ? 'nothing' : removed} from basket`);
-  listItems();
+  console.log(
+    `Removed ${removed === null ? '%s' : '%o'} from basket`,
+    removed === null ? 'nothing' : removed
+  );
+  console.assert(equal(basket, ['nacho']), 'Basket should be', ['nacho']);
+  console.log('Basket is', basket);
 }
