@@ -37,26 +37,72 @@ const equal = (a, b) => {
     }
 
     // Sort and compare defined entries
-    const definedEntries = obj => Object.entries(obj).filter(([_, value]) => value !== undefined);
+    const definedEntries = obj =>
+      Object.entries(obj).filter(([_, value]) => value !== undefined);
     return equal(definedEntries(a).sort(), definedEntries(b).sort());
   }
 
   return a === b;
 };
 
-console.assert(equal(undefined, undefined), '%o should equal %o', undefined, undefined);
+console.assert(
+  equal(undefined, undefined),
+  '%o should equal %o',
+  undefined,
+  undefined
+);
 console.assert(equal(null, null), '%o should equal %o', null, null);
-console.assert(!equal(null, { a: 1 }), '%o should not equal %o', null, { a: 1 });
+console.assert(
+  !equal(null, { a: 1 }),
+  '%o should not equal %o',
+  null,
+  { a: 1 }
+);
 console.assert(!equal({}, null), '%o should not equal %o', {}, null);
-console.assert(equal({ a: undefined }, {}), '%o should equal %o', { a: undefined }, {});
-console.assert(equal({ a: 1, b: 2 }, { b: 2, a: 1 }), '%o should equal %o', { a: 1, b: 2 }, { b: 2, a: 1 });
-console.assert(!equal(undefined, false), '%o should not equal %o', undefined, false);
-console.assert(equal({ a: [1, 2], b: 'hi' }, { a: [1, 2], b: 'hi' }), '%o should equal %o', { a: [1, 2], b: 'hi' }, { a: [1, 2], b: 'hi' });
+console.assert(
+  equal({ a: undefined }, {}),
+  '%o should equal %o',
+  { a: undefined },
+  {}
+);
+console.assert(
+  equal({ a: 1, b: 2 }, { b: 2, a: 1 }),
+  '%o should equal %o',
+  { a: 1, b: 2 },
+  { b: 2, a: 1 }
+);
+console.assert(
+  !equal(undefined, false),
+  '%o should not equal %o',
+  undefined,
+  false
+);
+console.assert(
+  equal({ a: [1, 2], b: 'hi' }, { a: [1, 2], b: 'hi' }),
+  '%o should equal %o',
+  { a: [1, 2], b: 'hi' },
+  { a: [1, 2], b: 'hi' }
+);
 console.assert(equal([], []), '%o should equal %o', [], []);
 console.assert(!equal([], [1, 2]), '%o should not equal %o', [], [1, 2]);
-console.assert(equal(['hello', 'there'], ['hello', 'there']), '%o should equal %o', ['hello', 'there'], ['hello', 'there']);
-console.assert(!equal([1, 2, 3], [1, 3, 2]), '%o should not equal %o', [1, 2, 3], [1, 3, 2]);
-console.assert(equal([[1, 2], ['hi', 'hello']], [[1, 2], ['hi', 'hello']]), '%o should equal %o', [[1, 2], ['hi', 'hello']], [[1, 2], ['hi', 'hello']]);
+console.assert(
+  equal(['hello', 'there'], ['hello', 'there']),
+  '%o should equal %o',
+  ['hello', 'there'],
+  ['hello', 'there']
+);
+console.assert(
+  !equal([1, 2, 3], [1, 3, 2]),
+  '%o should not equal %o',
+  [1, 2, 3],
+  [1, 3, 2]
+);
+console.assert(
+  equal([[1, 2], ['hi', 'hello']], [[1, 2], ['hi', 'hello']]),
+  '%o should equal %o',
+  [[1, 2], ['hi', 'hello']],
+  [[1, 2], ['hi', 'hello']]
+);
 
 
 const maxItems = 5;
@@ -111,7 +157,7 @@ const test = (name, fn) => {
   console.group('Testing %c%s', css, name);
   fn();
   console.groupEnd();
-}
+};
 
 test(addItem.name, () => {
   basket = [];
@@ -124,12 +170,14 @@ test(addItem.name, () => {
 });
 
 test(addItem.name, () => {
-  basket = ['tungsten cube', 'jellyfish', 'water', 'iPhone', 'spaghetti noodle'];
+  basket =
+    ['tungsten cube', 'jellyfish', 'water', 'iPhone', 'spaghetti noodle'];
   console.log('Basket is', basket);
   const newItem = 'bread';
   console.log('Adding %o to basket', newItem);
   console.log(`addItem (should be %o):`, false, addItem(newItem));
-  const expected = ['tungsten cube', 'jellyfish', 'water', 'iPhone', 'spaghetti noodle'];
+  const expected =
+    ['tungsten cube', 'jellyfish', 'water', 'iPhone', 'spaghetti noodle'];
   console.assert(equal(basket, expected), 'Basket should be ', expected);
   console.log('Basket is', basket);
 });
@@ -140,7 +188,8 @@ test(addItems.name, () => {
   const newItems = ['worse lettuce', 'purple'];
   console.log('Adding %o to basket', newItems);
   addItems(...newItems);
-  console.assert(equal(basket, ['rice', 'lettuce', 'worse lettuce', 'purple']));
+  const expected = ['rice', 'lettuce', 'worse lettuce', 'purple'];
+  console.assert(equal(basket, expected), 'Basket should be', expected);
   console.log('Basket is', basket);
 });
 
