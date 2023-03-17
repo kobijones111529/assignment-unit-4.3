@@ -20,6 +20,12 @@ function equal(a, b) {
   return true;
 }
 
+const testHeaderCSS = `
+  font-family: "Lucida Console", monospace;
+  font-weight: lighter;
+  font-size: 1.2em;
+`;
+
 console.assert(equal([], []), '%o should equal %o', [], []);
 console.assert(!equal([], [1, 2]), '%o should not equal %o', [], [1, 2]);
 console.assert(equal(['hello', 'there'], ['hello', 'there']), '%o should equal %o', ['hello', 'there'], ['hello', 'there'])
@@ -69,7 +75,7 @@ function removeItem(item) {
 /// Tests ///
 
 {
-  console.log('-- Testing addItem --');
+  console.group('Testing %c%s', testHeaderCSS, addItem.name);
   basket = [];
   console.log('Basket is', basket);
   const newItem = 'apple';
@@ -77,10 +83,11 @@ function removeItem(item) {
   console.log('addItem (should be %o):', !isFull(), addItem(newItem));
   console.assert(equal(basket, [newItem]), 'Basket should be', [newItem]);
   console.log('Basket is', basket);
+  console.groupEnd();
 }
 
 {
-  console.log('-- Testing addItem --');
+  console.group('Testing %c%s', testHeaderCSS, addItem.name);
   basket = ['tungsten cube', 'jellyfish', 'water', 'iPhone', 'spaghetti noodle'];
   console.log('Basket is', basket);
   const newItem = 'bread';
@@ -89,10 +96,11 @@ function removeItem(item) {
   const expected = ['tungsten cube', 'jellyfish', 'water', 'iPhone', 'spaghetti noodle'];
   console.assert(equal(basket, expected), 'Basket should be ', expected);
   console.log('Basket is', basket);
+  console.groupEnd();
 }
 
 {
-  console.log('-- Testing removeItem --');
+  console.group('Testing %c%s', testHeaderCSS, removeItem.name);
   basket = ['Apple M1 Pro laptop', 'pear', 'child'];
   console.log('Basket is', basket);
   const remove = 'pear';
@@ -101,10 +109,11 @@ function removeItem(item) {
   const expected = ['Apple M1 Pro laptop', 'child'];
   console.assert(equal(basket, expected), 'Basket should be', expected);
   console.log('Basket is', basket);
+  console.groupEnd();
 }
 
 {
-  console.log('-- Testing addItems --');
+  console.group('Testing %c%s', testHeaderCSS, addItems.name);
   basket = ['rice', 'lettuce'];
   console.log('Basket is', basket);
   const newItems = ['worse lettuce', 'purple'];
@@ -112,20 +121,22 @@ function removeItem(item) {
   addItems(...newItems);
   console.assert(equal(basket, ['rice', 'lettuce', 'worse lettuce', 'purple']));
   console.log('Basket is', basket);
+  console.groupEnd();
 }
 
 {
-  console.log('-- Testing empty --');
+  console.group('Testing %c%s', testHeaderCSS, empty.name);
   basket = ['modestly sized townhouse', 'granola'];
   console.log('Basket is', basket);
   console.log('Emptying basket');
   empty();
   console.assert(equal(basket, []), 'Basket should be', []);
   console.log('Basket is', basket);
+  console.groupEnd();
 }
 
 {
-  console.log('-- Testing removeItem --');
+  console.group('Testing %c%s', testHeaderCSS, removeItem.name);
   basket = ['green eggs', 'ham', 'Sam I am'];
   console.log('Basket is', basket);
   const remove = 'ham';
@@ -137,10 +148,11 @@ function removeItem(item) {
   );
   console.assert(equal(basket, ['green eggs', 'Sam I am']));
   console.log('Basket is', basket);
+  console.groupEnd();
 }
 
 {
-  console.log('-- Testing removeItem --');
+  console.group('Testing %c%s', testHeaderCSS, removeItem.name);
   basket = ['nacho'];
   console.log('Basket is', basket);
   const remove = 'cheese';
@@ -152,4 +164,5 @@ function removeItem(item) {
   );
   console.assert(equal(basket, ['nacho']), 'Basket should be', ['nacho']);
   console.log('Basket is', basket);
+  console.groupEnd();
 }
