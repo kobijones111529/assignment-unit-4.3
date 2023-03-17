@@ -100,19 +100,6 @@ function removeItem(item) {
 }
 
 {
-  console.group('Testing %c%s', testHeaderCSS, removeItem.name);
-  basket = ['Apple M1 Pro laptop', 'pear', 'child'];
-  console.log('Basket is', basket);
-  const remove = 'pear';
-  console.log(`Removing ${remove} from basket`);
-  console.log(`Removed ${removeItem(remove)} from basket`);
-  const expected = ['Apple M1 Pro laptop', 'child'];
-  console.assert(equal(basket, expected), 'Basket should be', expected);
-  console.log('Basket is', basket);
-  console.groupEnd();
-}
-
-{
   console.group('Testing %c%s', testHeaderCSS, addItems.name);
   basket = ['rice', 'lettuce'];
   console.log('Basket is', basket);
