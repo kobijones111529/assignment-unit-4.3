@@ -45,65 +45,66 @@ const equal = (a, b) => {
   return a === b;
 };
 
-console.assert(
-  equal(undefined, undefined),
-  '%o should equal %o',
-  undefined,
-  undefined
-);
-console.assert(equal(null, null), '%o should equal %o', null, null);
-console.assert(
-  !equal(null, { a: 1 }),
-  '%o should not equal %o',
-  null,
-  { a: 1 }
-);
-console.assert(!equal({}, null), '%o should not equal %o', {}, null);
-console.assert(
-  equal({ a: undefined }, {}),
-  '%o should equal %o',
-  { a: undefined },
-  {}
-);
-console.assert(
-  equal({ a: 1, b: 2 }, { b: 2, a: 1 }),
-  '%o should equal %o',
-  { a: 1, b: 2 },
-  { b: 2, a: 1 }
-);
-console.assert(
-  !equal(undefined, false),
-  '%o should not equal %o',
-  undefined,
-  false
-);
-console.assert(
-  equal({ a: [1, 2], b: 'hi' }, { a: [1, 2], b: 'hi' }),
-  '%o should equal %o',
-  { a: [1, 2], b: 'hi' },
-  { a: [1, 2], b: 'hi' }
-);
-console.assert(equal([], []), '%o should equal %o', [], []);
-console.assert(!equal([], [1, 2]), '%o should not equal %o', [], [1, 2]);
-console.assert(
-  equal(['hello', 'there'], ['hello', 'there']),
-  '%o should equal %o',
-  ['hello', 'there'],
-  ['hello', 'there']
-);
-console.assert(
-  !equal([1, 2, 3], [1, 3, 2]),
-  '%o should not equal %o',
-  [1, 2, 3],
-  [1, 3, 2]
-);
-console.assert(
-  equal([[1, 2], ['hi', 'hello']], [[1, 2], ['hi', 'hello']]),
-  '%o should equal %o',
-  [[1, 2], ['hi', 'hello']],
-  [[1, 2], ['hi', 'hello']]
-);
-
+(function testEqual() {
+  console.assert(
+    equal(undefined, undefined),
+    '%o should equal %o',
+    undefined,
+    undefined
+  );
+  console.assert(equal(null, null), '%o should equal %o', null, null);
+  console.assert(
+    !equal(null, { a: 1 }),
+    '%o should not equal %o',
+    null,
+    { a: 1 }
+  );
+  console.assert(!equal({}, null), '%o should not equal %o', {}, null);
+  console.assert(
+    equal({ a: undefined }, {}),
+    '%o should equal %o',
+    { a: undefined },
+    {}
+  );
+  console.assert(
+    equal({ a: 1, b: 2 }, { b: 2, a: 1 }),
+    '%o should equal %o',
+    { a: 1, b: 2 },
+    { b: 2, a: 1 }
+  );
+  console.assert(
+    !equal(undefined, false),
+    '%o should not equal %o',
+    undefined,
+    false
+  );
+  console.assert(
+    equal({ a: [1, 2], b: 'hi' }, { a: [1, 2], b: 'hi' }),
+    '%o should equal %o',
+    { a: [1, 2], b: 'hi' },
+    { a: [1, 2], b: 'hi' }
+  );
+  console.assert(equal([], []), '%o should equal %o', [], []);
+  console.assert(!equal([], [1, 2]), '%o should not equal %o', [], [1, 2]);
+  console.assert(
+    equal(['hello', 'there'], ['hello', 'there']),
+    '%o should equal %o',
+    ['hello', 'there'],
+    ['hello', 'there']
+  );
+  console.assert(
+    !equal([1, 2, 3], [1, 3, 2]),
+    '%o should not equal %o',
+    [1, 2, 3],
+    [1, 3, 2]
+  );
+  console.assert(
+    equal([[1, 2], ['hi', 'hello']], [[1, 2], ['hi', 'hello']]),
+    '%o should equal %o',
+    [[1, 2], ['hi', 'hello']],
+    [[1, 2], ['hi', 'hello']]
+  );
+})();
 
 const maxItems = 5;
 let basket = [];
@@ -133,7 +134,21 @@ function listItems() {
 }
 
 function empty() {
-  basket.splice(0);
+  const waysToEmptyAnArray = [
+    () => basket.splice(0),
+    () => basket = [],
+    () => basket.length = 0,
+    () => {
+      while (basket.length > 0)
+        basket.pop();
+    }
+  ];
+
+  // Moderate sadism
+  waysToEmptyAnArray[Math.floor(Math.random() * waysToEmptyAnArray.length)]();
+
+  // or, for maximum sadism
+  waysToEmptyAnArray[Math.floor((1 - Math.random()) * waysToEmptyAnArray.length)]?.apply();
 }
 
 function removeItem(item) {
@@ -148,6 +163,14 @@ function removeItem(item) {
 
 /// Testing ///
 
+/**
+ * Run a test in a nice little console group
+ * 
+ * Lightly inspired by Jest, but without
+ * any of the fancy stuff with expect
+ * @param {string} name 
+ * @param {Function} fn 
+ */
 const test = (name, fn) => {
   const css = `
     font-family: 'Courier New';
